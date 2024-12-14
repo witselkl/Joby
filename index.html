@@ -152,13 +152,13 @@
      const locateBtn = new Locate({ view: view }); 
        view.ui.add(locateBtn, "top-right");
        
-     // create a feature layer from a feature service for Hot Spring additions
-     const SpringLayer = new FeatureLayer({ 
-         url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/survey123_5b85a6bc6ccf4c328d28db6be8d6af71_results/FeatureServer", 
+     // create a feature layer from a feature service for pickup locations
+     const PickupLayer = new FeatureLayer({ 
+         url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/survey123_00a16cb69eaf4a8b8a52dc35860defaa_results/FeatureServer", 
      });
      
      //adding event layer to map
-     map.add(SpringLayer);
+     map.add(PickupLayer);
 
     // Define a pop-up for SchoolLayer 
     // const popupSchool = { 
@@ -191,16 +191,16 @@
             // popupTemplate: popupAirport }); 
             // map.add(AirportLayer);
 
-        // Define a pop-up for the SpringLayer 
-        const popupSpring = { 
+        // Define a pop-up for the PickupLayer 
+        const popupPickup = { 
                 title: "Spring", 
                 content: "<b>Name:</b> {Name}<br>" };
                 
         // Setting up the icon for Springs 
-        const SpringRenderer = { 
+        const PickupRenderer = { 
                 type: "simple", 
                 symbol: { type: "picture-marker", 
-                url: "hot_tub_24dp_0000F5.png", 
+                url: "local_airport_24dp_5F6368.png", 
                 width: "18px", height: "18px" } }; 
 
         // Setting up New Mexico Spring data
@@ -211,85 +211,7 @@
                 popupTemplate: popupSpring });   
                 map.add(NMSpringLayer);   
                 
-        // Setting up Colorado Spring data
-        const COSpringLayer = new FeatureLayer({ 
-                url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Colorado_Hot_Springs_Map_gdb/FeatureServer", 
-                renderer: SpringRenderer,
-                outFields: ["Name"], 
-                popupTemplate: popupSpring });   
-                map.add(COSpringLayer);       
-                        
-        // Setting up Montana Spring data
-        const MOSpringLayer = new FeatureLayer({ 
-                url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Montana_Hot_Springs_Map_gdb/FeatureServer", 
-                renderer: SpringRenderer,
-                outFields: ["Name"], 
-                popupTemplate: popupSpring });   
-                map.add(MOSpringLayer);
-                
-      // Setting up Wyoming Spring data
-      const WYSpringLayer = new FeatureLayer({ 
-                url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Wyoming_Hot_Springs_Map_gdb/FeatureServer", 
-                renderer: SpringRenderer,
-                outFields: ["Name"], 
-                popupTemplate: popupSpring });   
-                map.add(WYSpringLayer);         
-
-    // Setting up Washington Spring data
-    const WASpringLayer = new FeatureLayer({ 
-                url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Washington_State_Hot_Spring/FeatureServer", 
-                renderer: SpringRenderer,
-                outFields: ["Name"], 
-                popupTemplate: popupSpring });   
-                map.add(WASpringLayer);
-
-    // Setting up Oregon Spring data
-    const ORSpringLayer = new FeatureLayer({ 
-                url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Oregon_Hot_Springs_Map_gdb/FeatureServer", 
-                renderer: SpringRenderer,
-                outFields: ["Name"], 
-                popupTemplate: popupSpring });   
-                map.add(ORSpringLayer);
-
-    // Setting up California Spring data
-    const CASpringLayer = new FeatureLayer({ 
-                url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/California_Hot_Springs_Map_gdb/FeatureServer", 
-                renderer: SpringRenderer,
-                outFields: ["Name"], 
-                popupTemplate: popupSpring });   
-                map.add(CASpringLayer); 
-                
-    // Setting up Idaho Spring data
-    const IASpringLayer = new FeatureLayer({ 
-                url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Idaho_Hot_Springs_Map_gdb/FeatureServer", 
-                renderer: SpringRenderer,
-                outFields: ["Name"], 
-                popupTemplate: popupSpring });   
-                map.add(IASpringLayer); 
-                
-    // Setting up Utah Spring data
-    const UTSpringLayer = new FeatureLayer({ 
-                url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Utah_Hot_Springs_Map_gdb/FeatureServer", 
-                renderer: SpringRenderer,
-                outFields: ["Name"], 
-                popupTemplate: popupSpring });   
-                map.add(UTSpringLayer); 
-                
-    // Setting up Arizona Spring data
-    const AZSpringLayer = new FeatureLayer({ 
-                url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Hot_Springs_Arizona_Map_gdb/FeatureServer", 
-                renderer: SpringRenderer,
-                outFields: ["Name"], 
-                popupTemplate: popupSpring });   
-                map.add(AZSpringLayer); 
-                
-    // Setting up Nevada Spring data
-    const NVSpringLayer = new FeatureLayer({ 
-                url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Hot_Springs_Nevada_Map_gdb/FeatureServer", 
-                renderer: SpringRenderer,
-                outFields: ["Name"], 
-                popupTemplate: popupSpring });   
-                map.add(NVSpringLayer);             
+         
 
 
 
@@ -336,7 +258,7 @@
             mydiv.addEventListener("click", function(){
                 alert("Hello World!");
             });
-        </script>  //couldn't get to work because the style section wouldn't accept a #mydiv background along with the "add record" button. -->
+        </script>  
     <script type="text/javascript" src="js/main.js"></script>
  </body>
 </html>
