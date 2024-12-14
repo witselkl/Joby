@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Joby</title>
+  <meta charset="utf-8">
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <!-- <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'> -->
+
+  <!--put your Bootstrap stylesheet links below this comment and above style.css-->
+  <link rel="stylesheet" href="https://js.arcgis.com/4.30/esri/themes/light/main.css" rel="stylesheet"> 
+  <script src="https://js.arcgis.com/4.30/"></script>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+ 
+
+  <body>
+    <!-- Create the navbar -->
+    <nav class="navbar navbar-expand-lg navbar-default">
+        <!-- Container inside the navbar header to span the page -->
+        <div class="container-fluid">
+            <!-- Creates the navbar header -->
+            <a class="navbar-brand" href="index.html">Joby</a>
+            <!-- This complex script is just for a hamburger button, which will appear on smaller screens -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-list" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" /></svg>
+                <span class="menu"> Menu</span>
+            </button>
+            <!-- Links to include in navbar -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- Unordered list for links on navbar -->
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="index.html ">Book</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+            </div> <!-- end .navbar-collapse -->
+        </div> <!-- end .container-fluid -->
+    </nav> <!-- end navigation bar -->  
+
+    <!-- <div class="jumbotron">
+        <div class="container">
+            <h2>Greetings</h2> 
+        </div>
+    </div> -->
+
+  <!-- internal styles here -->
+  <style>
+
+   html,
+   body,
+   #viewDiv {
+    padding: 0;
+    margin: 0 auto;
+    height: 100%;
+    width: 90%;
+    /* border: 5px solid green; */
+    background-color: solid rgb(0, 60, 128) 
+   }
+
+   
+   .addRecordBtn {
+     position: absolute;
+     z-index: 10;
+     top: 10px;
+     right: 10px;
+     background-color: #0079c1;
+     color: white;
+     padding: 8px 16px; 
+     border: none;
+     border-radius: 4px;
+     font-size: 14px;
+     cursor: pointer;
+     text-decoration: none;
+   }
+
+   .addRecordBtn:hover {
+   background-color: #005a87;
+   }
+
+    </style>
+    <div class="container">
+      <div class="row">
+          <div class="col-md-3">
+
+              <img src="img/logo.PNG" alt="FireFly" class="img-responsive" id="pegasus" />
+
+          </div>
+          <div class="col-md-9">
+              
+              <p>
+              Book a flight!
+              </p>
+              <p>
+              Pick up location: (Pick list)
+              </p>
+              <p>
+              Drop off location: (Pick List)
+              </p>
+              <p> 
+              Route times shown in local time based on a 24 hour clock. 
+              Average cost per flight $300
+              </p>
+          
+                   
+          </div>
+      </div>
+  </div>
+
+  <script> 
+   require([ 
+        "esri/config", 
+        "esri/Map", 
+        "esri/views/MapView", 
+        "esri/Graphic", 
+        "esri/layers/GraphicsLayer", 
+        "esri/layers/FeatureLayer", 
+        "esri/widgets/BasemapGallery", 
+        "esri/widgets/Expand", 
+        "esri/widgets/Locate", 
+        "esri/widgets/Search"
+
+   ], function(esriConfig, Map, MapView, Graphic, GraphicsLayer, FeatureLayer, BasemapGallery, Expand, Locate, Search)  {
+    
+     esriConfig.apiKey = "AAPTxy8BH1VEsoebNVZXo8HurLnZ1SKuVjcmhuYy7ZgFo7nRkeaex5Pyse90hA3_-twQ9aZh3ukW7y7j9oxVbinOUkZTkuP5jIlAEtH5e_7DHP0liWf6tn6QTxetcFnI3rIi0xPzkoaEPekxL0-rDUwsAdMQRuux-0uuNMTE7e_lNeG45pvgeuCSr5abahKFzvuUJ-ewQsq9pGAJYlLcwozKzYElZv8h7OlHzgxN1NcRAiWme1AEaa5tzqVZug9kV8C5AT1_64sbOrZQ"; 
+     const map = new Map({
+       basemap: "hybrid"
+     });
+
+     //Create a basemap or background map
+     const view = new MapView({
+       container: "viewDiv", // Reference to the DOM node that will contain the view
+       map: map, // References the map object
+       center: [-122.389977, 37.615223], //Provide lat, long coordinate of the center of basemap
+       zoom: 14 }); //set scale of basemap upon opening
+
+     // Search Bar 
+     const search = new Search({ view: view }); 
+       view.ui.add(search, "top-left");
+
+       // Locate Button 
+     const locateBtn = new Locate({ view: view }); 
+       view.ui.add(locateBtn, "top-right");
+       
+     // create a feature layer from a feature service for Hot Spring additions
+     const SpringLayer = new FeatureLayer({ 
+         url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/survey123_5b85a6bc6ccf4c328d28db6be8d6af71_results/FeatureServer", 
+     });
+     
+     //adding event layer to map
+     map.add(SpringLayer);
+
+    // Define a pop-up for SchoolLayer 
+    // const popupSchool = { 
+    //         title: "School", 
+    //         content: "<b>Name:</b> {NAME}<br><b>City:</b> {CITY}<br> <b>Population:</b> {POPULATION}<br>", }; 
+
+    // // Adding the School feature layer 
+    // const SchoolLayer = new FeatureLayer({ 
+    //         url: "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/HIFLD_Public_Schools_Placekey/FeatureServer", 
+    //         outFields: ["NAME", "CITY", "POPULATION"], 
+    //         popupTemplate: popupSchool }); 
+    //         map.add(SchoolLayer);  
+
+    // // Define a pop-up for the AirportLayer 
+    // const popupAirport = { 
+    //         title: "Airport", 
+    //         content: "<b>Name:</b> {Fac_Name}<br>" };
+
+    // Setting up the icon for Airports 
+    //const airportRenderer = { 
+            // type: "simple", 
+            // symbol: { type: "picture-marker", 
+            // url: "local_airport_24dp_5F6368.png", 
+            // width: "10px", height: "10px" } }; 
+            
+    //const AirportLayer = new FeatureLayer({ 
+            // url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/US_AirportsGeog576/FeatureServer", 
+            // renderer: airportRenderer, 
+            // outFields: ["Fac_Name"], 
+            // popupTemplate: popupAirport }); 
+            // map.add(AirportLayer);
+
+        // Define a pop-up for the SpringLayer 
+        const popupSpring = { 
+                title: "Spring", 
+                content: "<b>Name:</b> {Name}<br>" };
+                
+        // Setting up the icon for Springs 
+        const SpringRenderer = { 
+                type: "simple", 
+                symbol: { type: "picture-marker", 
+                url: "hot_tub_24dp_0000F5.png", 
+                width: "18px", height: "18px" } }; 
+
+        // Setting up New Mexico Spring data
+        const NMSpringLayer = new FeatureLayer({ 
+                url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/New_Mexico_Hot_Springs_Map_gdb/FeatureServer", 
+                renderer: SpringRenderer,
+                outFields: ["Name"], 
+                popupTemplate: popupSpring });   
+                map.add(NMSpringLayer);   
+                
+        // Setting up Colorado Spring data
+        const COSpringLayer = new FeatureLayer({ 
+                url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Colorado_Hot_Springs_Map_gdb/FeatureServer", 
+                renderer: SpringRenderer,
+                outFields: ["Name"], 
+                popupTemplate: popupSpring });   
+                map.add(COSpringLayer);       
+                        
+        // Setting up Montana Spring data
+        const MOSpringLayer = new FeatureLayer({ 
+                url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Montana_Hot_Springs_Map_gdb/FeatureServer", 
+                renderer: SpringRenderer,
+                outFields: ["Name"], 
+                popupTemplate: popupSpring });   
+                map.add(MOSpringLayer);
+                
+      // Setting up Wyoming Spring data
+      const WYSpringLayer = new FeatureLayer({ 
+                url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Wyoming_Hot_Springs_Map_gdb/FeatureServer", 
+                renderer: SpringRenderer,
+                outFields: ["Name"], 
+                popupTemplate: popupSpring });   
+                map.add(WYSpringLayer);         
+
+    // Setting up Washington Spring data
+    const WASpringLayer = new FeatureLayer({ 
+                url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Washington_State_Hot_Spring/FeatureServer", 
+                renderer: SpringRenderer,
+                outFields: ["Name"], 
+                popupTemplate: popupSpring });   
+                map.add(WASpringLayer);
+
+    // Setting up Oregon Spring data
+    const ORSpringLayer = new FeatureLayer({ 
+                url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Oregon_Hot_Springs_Map_gdb/FeatureServer", 
+                renderer: SpringRenderer,
+                outFields: ["Name"], 
+                popupTemplate: popupSpring });   
+                map.add(ORSpringLayer);
+
+    // Setting up California Spring data
+    const CASpringLayer = new FeatureLayer({ 
+                url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/California_Hot_Springs_Map_gdb/FeatureServer", 
+                renderer: SpringRenderer,
+                outFields: ["Name"], 
+                popupTemplate: popupSpring });   
+                map.add(CASpringLayer); 
+                
+    // Setting up Idaho Spring data
+    const IASpringLayer = new FeatureLayer({ 
+                url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Idaho_Hot_Springs_Map_gdb/FeatureServer", 
+                renderer: SpringRenderer,
+                outFields: ["Name"], 
+                popupTemplate: popupSpring });   
+                map.add(IASpringLayer); 
+                
+    // Setting up Utah Spring data
+    const UTSpringLayer = new FeatureLayer({ 
+                url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Utah_Hot_Springs_Map_gdb/FeatureServer", 
+                renderer: SpringRenderer,
+                outFields: ["Name"], 
+                popupTemplate: popupSpring });   
+                map.add(UTSpringLayer); 
+                
+    // Setting up Arizona Spring data
+    const AZSpringLayer = new FeatureLayer({ 
+                url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Hot_Springs_Arizona_Map_gdb/FeatureServer", 
+                renderer: SpringRenderer,
+                outFields: ["Name"], 
+                popupTemplate: popupSpring });   
+                map.add(AZSpringLayer); 
+                
+    // Setting up Nevada Spring data
+    const NVSpringLayer = new FeatureLayer({ 
+                url: "https://services.arcgis.com/HRPe58bUyBqyyiCt/arcgis/rest/services/Hot_Springs_Nevada_Map_gdb/FeatureServer", 
+                renderer: SpringRenderer,
+                outFields: ["Name"], 
+                popupTemplate: popupSpring });   
+                map.add(NVSpringLayer);             
+
+
+
+            
+    // Basemap Gallery
+    const basemapGallery = new BasemapGallery({
+        view: view,
+        // source: [
+        //   Basemap.fromId("streets"),
+        //   Basemap.fromId("satellite"),
+        //   Basemap.fromId("hybrid"),
+        //   Basemap.fromId("topo"),
+        //   Basemap.fromId("gray"),
+        //   Basemap.fromId("dark-gray"),
+        //   Basemap.fromId("oceans"),
+        //   Basemap.fromId("national-geographic"),
+        //   Basemap.fromId("terrain"),
+        //   Basemap.fromId("osm")
+        // ]
+      });
+
+      //creates a collapse basemap gallery button
+      const basemapGalleryExpand = new Expand({
+        view: view,
+        content: basemapGallery,
+        expandIconClass: "esri-icon-basemap" // Optional, defaults to "esri-icon-expand"
+      });
+
+      view.ui.add(basemapGalleryExpand, "top-right");             
+
+   }); 
+ 
+ 
+ </script>
+ 
+
+ </head>
+ <body>
+  <h1>Where are you headed?</h1>
+  <a href="https://arcg.is/1WW51m" target="_blank" class="addRecordBtn">Schedule</a>
+  <div id="viewDiv"></div>
+
+  <!-- <script>viewDiv = document.getElementById("viewDiv");
+            mydiv.addEventListener("click", function(){
+                alert("Hello World!");
+            });
+        </script>  //couldn't get to work because the style section wouldn't accept a #mydiv background along with the "add record" button. -->
+    <script type="text/javascript" src="js/main.js"></script>
+ </body>
+</html>
